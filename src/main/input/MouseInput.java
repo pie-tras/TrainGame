@@ -39,7 +39,7 @@ public class MouseInput extends MouseAdapter{
 		int my = (int) (e.getY() + camera.getY());
 		
 		
-		if(game.isDead()) return;
+		if(game.getPlayer().getType()<0) return;
 		
 		for(int i=0; i< handler.object.size(); i++){
 			GameObjects tempObject = handler.object.get(i);
@@ -50,8 +50,14 @@ public class MouseInput extends MouseAdapter{
 				
 				if(tempObject.getType()==-1){
 					game.setHp(game.getHp() - 10);
-				}else if(tempObject.getType()==-2 && game.getHp()!=game.getStartHp()){
-					game.setHp(game.getHp() + 10);
+				}else if(tempObject.getType()==-2){
+					if(game.getHp()!=game.getStartHp()){
+						game.setHp(game.getHp() + 10);
+					}else{
+						game.getCoinSound().stop ();
+						game.getCoinSound().play();
+						game.setMoney(game.getMoney()+10);
+					}
 				}else{
 					
 					game.getCoinSound().stop ();

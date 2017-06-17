@@ -1,7 +1,18 @@
 # TrainGame
 
-Res folder needs to be added to build path if it is not already.
+How to play:
 
-Left click on res->Hover over build path-> Click Use as source folder
+Use up and down keys for acceleration (Temporary)
 
-Now run as Application
+You are a mine cart.
+
+Click on as many rocks as possible without touching the dangerous materials.
+
+Gray rocks- 1 unit
+Dark Gray rocks- 2 units
+Cyan rocks- Restores 10 hp
+(Total hp=20)
+
+Red rocks - subtracts 10 hp
+
+Get to the end of the level with as much money as possible without breaking down.

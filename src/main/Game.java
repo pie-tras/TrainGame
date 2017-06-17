@@ -30,6 +30,7 @@ public class Game extends Canvas implements Runnable{
 	private final int WIDTH=800, HEIGHT=600;
 	
 	private Music coinSound = new Music("res/audio/Coin.wav");
+	private Music trackSound = new Music("res/audio/Tracks.wav");
 	
 	private GameObjects player;
 	
@@ -47,7 +48,7 @@ public class Game extends Canvas implements Runnable{
 		this.addMouseListener(mouseInput);
 		this.addMouseMotionListener(mouseInput);
 		  
-		player = new MineCart(0, 530, ID.mineCart, handler);
+		player = new MineCart(0, 530, ID.mineCart, handler, this);
 		
 		createLevel();
 	}
@@ -108,7 +109,7 @@ public class Game extends Canvas implements Runnable{
 		
 		handler.tick();
 	}
-	
+
 	public void render(){
 		BufferStrategy bs = this.getBufferStrategy();
 		if(bs == null){
@@ -249,7 +250,23 @@ public class Game extends Canvas implements Runnable{
 	public void setCoinSound(Music coinSound) {
 		this.coinSound = coinSound;
 	}
+
+	public Music getTrackSound() {
+		return trackSound;
+	}
+
+	public void setTrackSound(Music trackSound) {
+		this.trackSound = trackSound;
+	}
 	
+	public GameObjects getPlayer() {
+		return player;
+	}
+
+	public void setPlayer(GameObjects player) {
+		this.player = player;
+	}
+
 	
 	
 }

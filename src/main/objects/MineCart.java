@@ -1,9 +1,9 @@
 package main.objects;
 
-import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Rectangle;
 
+import main.Game;
 import main.Handler;
 import main.gfx.Animation;
 import main.gfx.Assets;
@@ -12,11 +12,12 @@ public class MineCart extends GameObjects{
 
 	Animation move = new Animation(110 ,Assets.mineCart);
 	
-	private Handler handler;
+	private Game game;
 	
-	public MineCart(int x, int y, ID id, Handler handler) {
+	public MineCart(int x, int y, ID id, Handler handler, Game game) {
 		super(x, y, id);
-		this.handler=handler;
+		this.game=game;
+		game.getTrackSound().loop();
 	}
 
 	@Override
@@ -24,9 +25,11 @@ public class MineCart extends GameObjects{
 		move.tick();
 		x+=velX;
 		
-		if(type==-1){
+		if(type<0){
 			if(velX>0.1){
 				velX-=.1f;
+			}else{
+				game.getTrackSound().stop();
 			}
 		}else{
 			if(velX<8){
