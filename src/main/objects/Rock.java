@@ -29,7 +29,7 @@ public class Rock extends GameObjects{
 			g.setColor(Color.GRAY);
 			g.fillRect(x, y, width, height);
 		}else if(type==2){
-			g.setColor(Color.DARK_GRAY);
+			g.setColor(Color.WHITE);
 			g.fillRect(x, y, width, height);
 		}
 	}

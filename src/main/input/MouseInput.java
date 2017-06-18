@@ -54,13 +54,13 @@ public class MouseInput extends MouseAdapter{
 					if(game.getHp()!=game.getStartHp()){
 						game.setHp(game.getHp() + 10);
 					}else{
-						game.getCoinSound().stop ();
+						game.getCoinSound().stop();
 						game.getCoinSound().play();
 						game.setMoney(game.getMoney()+10);
 					}
-				}else{
+				}else if(tempObject.getType()>0){
 					
-					game.getCoinSound().stop ();
+					game.getCoinSound().stop();
 					game.getCoinSound().play();
 					game.setMoney(game.getMoney()+(tempObject.getType()));
 					

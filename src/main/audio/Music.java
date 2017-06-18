@@ -69,11 +69,20 @@ public class Music {
 	    public void reduceVol(float amt){
 	    	FloatControl volume = (FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);
 	    	float currentVol=volume.getValue();
-	    	
-	    	volume.setValue(currentVol-amt);
+	    	if(currentVol-amt>-80f){
+	    		volume.setValue(currentVol-amt);
+	    	}
 	    }
 	    
-	    public void increaseVol(){
+	    public void increaseVol(int amt){
+	    	FloatControl volume = (FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);
+	    	float currentVol=volume.getValue();
 	    	
+	    	volume.setValue(currentVol+amt);
+	    }
+	    
+	    public void setVol(float amt){
+	    	FloatControl volume = (FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);
+	    	volume.setValue(amt);
 	    }
 }

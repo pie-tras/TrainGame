@@ -28,6 +28,7 @@ public class MineCart extends GameObjects{
 		if(type<0){
 			if(velX>0.1){
 				velX-=.1f;
+				game.getTrackSound().reduceVol(1f);
 			}else{
 				game.getTrackSound().stop();
 			}

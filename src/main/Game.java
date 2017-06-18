@@ -29,8 +29,15 @@ public class Game extends Canvas implements Runnable{
 	private MouseInput mouseInput;
 	private final int WIDTH=800, HEIGHT=600;
 	
+	//music
+	private Music banjo = new Music("res/audio/Banjo.wav");
+	
+	//sounds
 	private Music coinSound = new Music("res/audio/Coin.wav");
 	private Music trackSound = new Music("res/audio/Tracks.wav");
+	
+	//ambient
+	private Music ambientCave = new Music("res/audio/AmbientCave.wav");
 	
 	private GameObjects player;
 	
@@ -51,6 +58,12 @@ public class Game extends Canvas implements Runnable{
 		player = new MineCart(0, 530, ID.mineCart, handler, this);
 		
 		createLevel();
+		
+		banjo.setVol(-12f);
+		banjo.loop();
+		ambientCave.setVol(5f);
+		ambientCave.loop();
+		trackSound.setVol(4f);
 	}
 	
 	private void start(){
@@ -122,7 +135,10 @@ public class Game extends Canvas implements Runnable{
 		
 		//clear screen
 		g.clearRect(0, 0, WIDTH, HEIGHT);
-				
+		
+		g.setColor(Color.DARK_GRAY);
+		g.fillRect(0, 0, WIDTH, HEIGHT);
+		
 		//draw here
 		g2d.translate(-camera.getX(), -camera.getY());
 		

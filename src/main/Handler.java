@@ -39,8 +39,8 @@ public class Handler {
 					
 				}else{
 					if(tempObject.getId()==ID.mineCart){
-						object.remove(tempObject);
-						game.getTrackSound().reduceVol(10.0f);
+						tempObject.setType(-1);
+						tempObject.tick();
 					}
 				}
 			}
