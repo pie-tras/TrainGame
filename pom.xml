@@ -28,7 +28,50 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
             </plugin>
+            <plugin>
+                <artifactId>jdeb</artifactId>
+                <groupId>org.vafer</groupId>
+                <version>1.5</version>
+                <executions>
+                    <execution>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>jdeb</goal>
+                        </goals>
+                        <configuration>
+                            <verbose>true</verbose>
+                            <snapshotExpand>true</snapshotExpand>
+                            <!-- expand "SNAPSHOT" to what is in the "USER" env variable -->
+                            <snapshotEnv>USER</snapshotEnv>
+                            <verbose>true</verbose>
+                            <controlDir>${basedir}/src/deb/control</controlDir>
+                            <dataSet>
+
+                                <data>
+                                  <src>${project.build.directory}/${project.build.finalName}.jar</src>
+                                  <type>file</type>
+                                  <mapper>
+                                    <type>perm</type>
+                                    <prefix>/opt/yourapp/lib</prefix>
+                                    <user>root</user>
+                                    <group>root</group>
+                                  </mapper>
+                                </data>
+
+                                <data>
+                                  <type>link</type>
+                                  <symlink>true</symlink>
+                                  <linkName>/opt/yourapp/lib/jdeb.jar</linkName>
+                                  <linkTarget>/opt/yourapp/lib/${project.build.finalName}.jar</linkTarget>
+                                </data>
+
+                            </dataSet>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
         </plugins>
+        
     </build>
     
     <dependencies>
@@ -51,16 +94,13 @@
             <groupId>org.springframework</groupId>
             <artifactId>spring-context</artifactId>
         </dependency>
-        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-context</artifactId>
-        </dependency>
+        
         <dependency>
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
             <scope>runtime</scope>
         </dependency>
-        <!-- https://mvnrepository.com/artifact/org.springframework/spring-context -->
+        
         <dependency>
           <groupId>org.json</groupId>    
               <artifactId>json</artifactId>     
