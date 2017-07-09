@@ -7,6 +7,14 @@ import java.awt.Graphics2D;
 import java.awt.image.BufferStrategy;
 import java.util.Random;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.boot.CommandLineRunner;
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.stereotype.Component;
+
 import main.audio.Music;
 import main.gfx.Assets;
 import main.gfx.Camera;
@@ -18,7 +26,8 @@ import main.objects.GameObjects;
 import main.objects.Rock;
 import main.objects.MineCart;
 
-public class Game extends Canvas implements Runnable{
+@SpringBootApplication
+public class Game extends Canvas implements Runnable, CommandLineRunner {
 
 	private static final long serialVersionUID = 1L;
 
@@ -30,14 +39,21 @@ public class Game extends Canvas implements Runnable{
 	private final int WIDTH=800, HEIGHT=600;
 	
 	//music
-	private Music banjo = new Music("res/audio/Banjo.wav");
+	@Autowired
+	@Qualifier("banjoSound")
+	private Music banjo;
 	
 	//sounds
-	private Music coinSound = new Music("res/audio/Coin.wav");
-	private Music trackSound = new Music("res/audio/Tracks.wav");
+	@Autowired
+	private Music coinSound;
+	
+	@Autowired
+	private Music trackSound;
 	
 	//ambient
-	private Music ambientCave = new Music("res/audio/AmbientCave.wav");
+	@Autowired
+	@Qualifier("ambientCaveSound")
+	private Music ambientCave;
 	
 	private GameObjects player;
 	
@@ -45,25 +61,6 @@ public class Game extends Canvas implements Runnable{
 	private int hp=20, startHp=hp, money;
 	
 	public Game(){
-		new Window(WIDTH, HEIGHT, "Train Game", this);
-		Assets.init();
-		camera = new Camera(0, 100);
-		handler = new Handler(this, camera);
-		start();
-		this.addKeyListener(new KeyInput(handler));
-		mouseInput = new MouseInput(handler, camera, this);
-		this.addMouseListener(mouseInput);
-		this.addMouseMotionListener(mouseInput);
-		  
-		player = new MineCart(0, 530, ID.mineCart, handler, this);
-		
-		createLevel();
-		
-		banjo.setVol(-12f);
-		banjo.loop();
-		ambientCave.setVol(5f);
-		ambientCave.loop();
-		trackSound.setVol(4f);
 	}
 	
 	private void start(){
@@ -216,7 +213,7 @@ public class Game extends Canvas implements Runnable{
 	
 	
 	public static void main(String args[]){
-		new Game();
+	    SpringApplication.run(Game.class, args);
 	}
 
 	public int getMoney() {
@@ -282,6 +279,31 @@ public class Game extends Canvas implements Runnable{
 	public void setPlayer(GameObjects player) {
 		this.player = player;
 	}
+
+    @Override
+    public void run(String... arg0) throws Exception {
+        // TODO Auto-generated method stub
+
+        new Window(WIDTH, HEIGHT, "Train Game", this);
+        Assets.init();
+        camera = new Camera(0, 100);
+        handler = new Handler(this, camera);
+        start();
+        this.addKeyListener(new KeyInput(handler));
+        mouseInput = new MouseInput(handler, camera, this);
+        this.addMouseListener(mouseInput);
+        this.addMouseMotionListener(mouseInput);
+          
+        player = new MineCart(0, 530, ID.mineCart, handler, this);
+        
+        createLevel();
+        
+        banjo.setVol(-12f);
+        banjo.loop();
+        ambientCave.setVol(5f);
+        ambientCave.loop();
+        trackSound.setVol(4f);
+    }
 
 	
 	
