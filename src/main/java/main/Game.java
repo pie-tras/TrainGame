@@ -7,13 +7,13 @@ import java.awt.Graphics2D;
 import java.awt.image.BufferStrategy;
 import java.util.Random;
 
+import javax.sql.DataSource;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.annotation.ComponentScan;
-import org.springframework.stereotype.Component;
 
 import main.audio.Music;
 import main.gfx.Assets;
@@ -26,6 +26,8 @@ import main.objects.GameObjects;
 import main.objects.Rock;
 import main.objects.MineCart;
 
+// By making this a SpringBootApplication, we get some nice things for "free"
+// like configuration and auto-wiring.
 @SpringBootApplication
 public class Game extends Canvas implements Runnable, CommandLineRunner {
 
@@ -38,6 +40,9 @@ public class Game extends Canvas implements Runnable, CommandLineRunner {
 	private MouseInput mouseInput;
 	private final int WIDTH=800, HEIGHT=600;
 	
+	// Autowired variables are set by some Spring magic at application boot.
+	// The names and types of these variables are important to make the Autowiring 
+	// magic work.
 	//music
 	@Autowired
 	@Qualifier("banjoSound")
@@ -59,6 +64,9 @@ public class Game extends Canvas implements Runnable, CommandLineRunner {
 	
 	private boolean dead=false;
 	private int hp=20, startHp=hp, money;
+	
+	@Autowired
+	private DataSource datasource;
 	
 	public Game(){
 	}
@@ -280,10 +288,9 @@ public class Game extends Canvas implements Runnable, CommandLineRunner {
 		this.player = player;
 	}
 
+	// This is the entry point of the Spring Boot Application - Command Line Runner
     @Override
     public void run(String... arg0) throws Exception {
-        // TODO Auto-generated method stub
-
         new Window(WIDTH, HEIGHT, "Train Game", this);
         Assets.init();
         camera = new Camera(0, 100);
@@ -303,6 +310,8 @@ public class Game extends Canvas implements Runnable, CommandLineRunner {
         ambientCave.setVol(5f);
         ambientCave.loop();
         trackSound.setVol(4f);
+        
+        datasource.getConnection().createStatement().execute("create table `test` (`a` int);");
     }
 
 	
