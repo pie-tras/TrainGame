@@ -5,6 +5,7 @@ import java.awt.Rectangle;
 
 import main.Game;
 import main.Handler;
+import main.PlayerModel;
 import main.gfx.Animation;
 import main.gfx.Assets;
 
@@ -13,9 +14,11 @@ public class MineCart extends GameObjects{
 	Animation move = new Animation(110 ,Assets.mineCart);
 	
 	private Game game;
+	private PlayerModel playerModel;
 	
 	public MineCart(int x, int y, ID id, Handler handler, Game game) {
 		super(x, y, id);
+		this.playerModel= new PlayerModel(20, 0);
 		this.game=game;
 		game.getTrackSound().loop();
 	}
@@ -54,5 +57,9 @@ public class MineCart extends GameObjects{
 	public Rectangle getBounds() {
 		return new Rectangle(x+20, y+140, 308, 80);
 	}
+	
+	public PlayerModel getModel() {
+        return playerModel;
+    }
 
 }
