@@ -1,0 +1,8 @@
+Package: pie-tras-traingame
+Version: 1.0
+Section: misc 
+Priority: low 
+Architecture: all 
+Description: TrainGame https://github.com/pie-tras/TrainGame
+Maintainer: your-name@here.com
+Depends: 
