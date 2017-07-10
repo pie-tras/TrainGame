@@ -18,9 +18,10 @@ public class KeyInput extends KeyAdapter{
 	public void keyPressed(KeyEvent e){
 		int key = e.getKeyCode();
 		
-		for(int i = 0; i < handler.object.size(); i++){
-			GameObjects tempObject = handler.object.get(i);
+		//for(int i = 0; i < handler.object.size(); i++){
+		//	GameObjects tempObject = handler.object.get(i);
 			
+		for (GameObjects tempObject : handler.getObjects()) {
 			if(tempObject.getId() == ID.mineCart){
 				if(key == KeyEvent.VK_UP) handler.setMove(true);
 				if(key == KeyEvent.VK_DOWN) handler.setBrake(true);
@@ -32,8 +33,10 @@ public class KeyInput extends KeyAdapter{
 	public void keyReleased(KeyEvent e){
 		int key = e.getKeyCode();
 		
-		for(int i = 0; i < handler.object.size(); i++){
-			GameObjects tempObject = handler.object.get(i);
+		//for(int i = 0; i < handler.object.size(); i++){
+		//	GameObjects tempObject = handler.object.get(i);
+		
+		for (GameObjects tempObject : handler.getObjects()) {
 			
 			if(tempObject.getId() == ID.mineCart){
 				if(key == KeyEvent.VK_UP) handler.setMove(false);

@@ -45,8 +45,7 @@ public class MouseInput extends MouseAdapter{
 		
 		if(game.getPlayer().getType()<0) return;
 		
-		for(int i=0; i< handler.object.size(); i++){
-			GameObjects tempObject = handler.object.get(i);
+		for (GameObjects tempObject : handler.getObjects()) {
 			
 			Rectangle r = new Rectangle(mx-16, my-8, 32, 32);
 			

@@ -113,10 +113,20 @@ public class Game extends Canvas implements Runnable, CommandLineRunner {
 			player.setType(-1);
 		}
 		
+		// see below loop for slightly different implementation. 
+		/* 
 		for(int i = 0; i < handler.object.size(); i++){
 			if(handler.object.get(i).getId() == ID.mineCart){
 				camera.tick(handler.object.get(i));
 			}
+		}
+		*/
+		
+		// newer for loop structure (as of about Java6)
+		for (GameObjects obj : handler.getObjects()) {
+		   if (obj.getId() == ID.mineCart) {
+		       camera.tick(obj);
+		   }
 		}
 		
 		handler.tick();

@@ -2,7 +2,9 @@ package main;
 
 import java.awt.Graphics;
 import java.awt.Rectangle;
+import java.util.Collections;
 import java.util.LinkedList;
+import java.util.List;
 
 import main.gfx.Camera;
 import main.objects.GameObjects;
@@ -45,6 +47,10 @@ public class Handler {
 			}
 		}
 	}
+	
+	public List<GameObjects> getObjects() {
+        return Collections.unmodifiableList(object);
+    }
 		
 	public void render(Graphics g){
 		for(int i = 0; i < object.size(); i++){
