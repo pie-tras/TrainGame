@@ -11,81 +11,81 @@ import main.objects.ID;
 public class Handler {
 	//tick and render all objects
 
-		public LinkedList<GameObjects> object = new LinkedList<GameObjects>();
-		
-		private boolean move = false, brake = false;
+    // member variables should generally all be private to promote encapsulation
+	private LinkedList<GameObjects> object = new LinkedList<GameObjects>();
+	private boolean move = false, brake = false;
 	
-		private Game game;
-		private Camera camera;
+	private Game game;
+	private Camera camera;
 		
-		public Handler(Game game, Camera camera){
-			this.game=game;
-			this.camera=camera;
-		}
+	public Handler(Game game, Camera camera){
+	    this.game=game;
+	    this.camera=camera;
+	}
 		
-		public void tick(){
-			for(int i = 0; i < object.size(); i++){
-				GameObjects tempObject = object.get(i);
+	public void tick(){
+		for(int i = 0; i < object.size(); i++){
+			GameObjects tempObject = object.get(i);
+			
+			Rectangle screen = new Rectangle((int)camera.getX(), (int)camera.getY(), game.getWIDTH(), game.getHEIGHT());
+			
+			if(tempObject.getBounds().intersects(screen)){
 				
-				Rectangle screen = new Rectangle((int)camera.getX(), (int)camera.getY(), game.getWIDTH(), game.getHEIGHT());
-				
-				if(tempObject.getBounds().intersects(screen)){
-					
-					if(tempObject.getId()==ID.rock && tempObject.getType()!=0){
-						tempObject.tick();
-					}else{
-						tempObject.tick();
-					}
-					
+				if(tempObject.getId()==ID.rock && tempObject.getType()!=0){
+					tempObject.tick();
 				}else{
-					if(tempObject.getId()==ID.mineCart){
-						tempObject.setType(-1);
-						tempObject.tick();
-					}
+					tempObject.tick();
 				}
-			}
-		}
-		
-		public void render(Graphics g){
-			for(int i = 0; i < object.size(); i++){
-				GameObjects tempObject = object.get(i);
-
-				Rectangle screen = new Rectangle((int)camera.getX(), (int)camera.getY(), game.getWIDTH(), game.getHEIGHT());
 				
-				if(tempObject.getBounds().intersects(screen)){
-					
-					if(tempObject.getId()==ID.rock && tempObject.getType()!=0){
-						tempObject.render(g);
-					}else{
-						tempObject.render(g);
-					}
+			}else{
+				if(tempObject.getId()==ID.mineCart){
+					tempObject.setType(-1);
+					tempObject.tick();
 				}
 			}
 		}
+	}
 		
-		public void addObject(GameObjects tempObject){
-			object.add(tempObject);
+	public void render(Graphics g){
+		for(int i = 0; i < object.size(); i++){
+			GameObjects tempObject = object.get(i);
+
+			Rectangle screen = new Rectangle((int)camera.getX(), (int)camera.getY(), game.getWIDTH(), game.getHEIGHT());
+			
+			if(tempObject.getBounds().intersects(screen)){
+				
+				if(tempObject.getId()==ID.rock && tempObject.getType()!=0){
+					tempObject.render(g);
+				}else{
+					tempObject.render(g);
+				}
+			}
 		}
+	}
+	
+	public void addObject(GameObjects tempObject){
+		object.add(tempObject);
+	}
+	
+	public void removeObject(GameObjects tempObject){
+		object.remove(tempObject);
+	}
+
+	public boolean isMove() {
+		return move;
+	}
+
+	public void setMove(boolean move) {
+		this.move = move;
+	}
 		
-		public void removeObject(GameObjects tempObject){
-			object.remove(tempObject);
-		}
+	public boolean isBrake() {
+		return brake;
+	}
 
-		public boolean isMove() {
-			return move;
-		}
-
-		public void setMove(boolean move) {
-			this.move = move;
-		}
-		
-		public boolean isBrake() {
-			return brake;
-		}
-
-		public void setBrake(boolean brake) {
-			this.brake = brake;
-		}
+	public void setBrake(boolean brake) {
+		this.brake = brake;
+	}
 
 
 		
