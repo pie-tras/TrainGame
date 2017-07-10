@@ -48,6 +48,10 @@ public class Handler {
 		}
 	}
 	
+	/**
+	 * Returns a read-only copy of the internal list of objects being tracked by this handler
+	 * @return
+	 */
 	public List<GameObjects> getObjects() {
         return Collections.unmodifiableList(object);
     }
