@@ -11,7 +11,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 
-@Configuration("/application.yml")
+@Configuration
 @EnableAutoConfiguration
 public class Settings {
 
