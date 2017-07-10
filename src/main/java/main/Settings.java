@@ -30,7 +30,7 @@ public class Settings {
 	@Value("${spring.datasource.driver-class-name:org.sqlite.JDBC}")
 	private String jdbcDriver;
 	
-	@Value("${spring.datasource.url:jdbc:sqlite:db/chinook.db}")
+	@Value("${spring.datasource.url:jdbc:sqlite:test.db}")
 	private String jdbcUrl;
     
 	@Bean(name="banjoSound")
