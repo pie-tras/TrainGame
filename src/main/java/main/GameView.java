@@ -41,7 +41,7 @@ public class GameView extends Canvas implements Runnable {
 	private GameController game;
 	
 	private MouseInput mouseInput;
-	private Thread thread;
+	//private Thread thread;
 	
 	private Level level;
 	

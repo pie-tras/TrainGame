@@ -1,15 +1,10 @@
 package main;
 
-import java.awt.Graphics;
 import java.awt.Rectangle;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 
-import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
-import org.springframework.stereotype.Component;
-
-import main.gfx.Camera;
 import main.objects.GameObjects;
 import main.objects.ID;
 
@@ -27,15 +22,17 @@ public class EventHandler {
 			
 			if(tempObject.getBounds().intersects(screen)){
 				
-				if(tempObject.getId()==ID.rock && tempObject.getType()!=0){
+			    // there is no difference between the if() and the else()
+				//if(tempObject.getId()==ID.rock && tempObject.getType()!=0){
 					tempObject.tick();
-				}else{
-					tempObject.tick();
-				}
+				//} 
+				//else{
+				//	tempObject.tick();
+				//}
 				
 			}else{
 				if(tempObject.getId()==ID.mineCart){
-					tempObject.setType(-1);
+					tempObject.setType(-1);    // brad: figure out why the type is getting set to -1 and what that means.
 					tempObject.tick();
 				}
 			}

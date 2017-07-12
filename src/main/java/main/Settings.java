@@ -71,11 +71,6 @@ public class Settings {
 	}
 	
 	@Bean
-	public EventHandler eventHandler() {
-	    return new EventHandler();
-	}
-	
-	@Bean
 	public DataSource dataSource() {
 	    DataSourceBuilder dataSourceBuilder = DataSourceBuilder.create();
 	    dataSourceBuilder.driverClassName(jdbcDriver);
