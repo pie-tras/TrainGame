@@ -109,7 +109,6 @@ public class Game implements Runnable, CommandLineRunner {
 				tick();
 				delta--;
 			}
-			view.render();
 			
 			if(System.currentTimeMillis() - timer > 1000){
 				timer += 1000;

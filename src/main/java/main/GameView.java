@@ -68,8 +68,9 @@ public class GameView extends Canvas implements Runnable {
 	public void run() {
 		this.requestFocus();
 		while (game.isRunning()) {
+			render();
 		    try {
-		        Thread.sleep(500);
+		        Thread.sleep(5);
 		    } catch (InterruptedException ignore) {
 		        
 		    }
@@ -86,13 +87,13 @@ public class GameView extends Canvas implements Runnable {
 	            
 	        if(tempObject.getBounds().intersects(screen)){
 	                
-	        if(tempObject.getId()==ID.rock && tempObject.getType()!=0){
-	            tempObject.render(g);
-	                }else{
-	                    tempObject.render(g);
-	                }
+	            if(tempObject.getId()==ID.rock && tempObject.getType()!=0){
+	                tempObject.render(g);
+	            }else{
+	                tempObject.render(g);
 	            }
 	        }
+	    }
 	}
 	
 	
@@ -134,10 +135,10 @@ public class GameView extends Canvas implements Runnable {
         Graphics2D g2d = (Graphics2D) g;
         
         //clear screen
-        g.clearRect(0, 0, WIDTH, HEIGHT);
+        g.clearRect(0, 0, windowWidth, windowHeight);
         
         g.setColor(Color.DARK_GRAY);
-        g.fillRect(0, 0, WIDTH, HEIGHT);
+        g.fillRect(0, 0, windowWidth, windowHeight);
         
         //draw here
         g2d.translate(-camera.getX(), -camera.getY());
