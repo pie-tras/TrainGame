@@ -6,10 +6,15 @@ import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 
+import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
+import org.springframework.stereotype.Component;
+
 import main.gfx.Camera;
 import main.objects.GameObjects;
 import main.objects.ID;
 
+@EnableAutoConfiguration
+@Component
 public class EventHandler {
 	//tick and render all objects
 
@@ -17,19 +22,11 @@ public class EventHandler {
 	private LinkedList<GameObjects> object = new LinkedList<GameObjects>();
 	private boolean move = false, brake = false;
 	
-	private Game game;
-	private Camera camera;
 		
-	public EventHandler(Game game, Camera camera){
-	    this.game=game;
-	    this.camera=camera;
+	public EventHandler(){
 	}
 		
-	public void tick(){
-	    
-	    for (GameObjects tempObject : object) {
-			
-			Rectangle screen = new Rectangle((int)camera.getX(), (int)camera.getY(), game.getWIDTH(), game.getHEIGHT());
+	public void tick(GameObjects tempObject, Rectangle screen){
 			
 			if(tempObject.getBounds().intersects(screen)){
 				
@@ -45,7 +42,6 @@ public class EventHandler {
 					tempObject.tick();
 				}
 			}
-		}
 	}
 	
 	/**
@@ -56,22 +52,7 @@ public class EventHandler {
         return Collections.unmodifiableList(object);
     }
 		
-	public void render(Graphics g){
-		for(int i = 0; i < object.size(); i++){
-			GameObjects tempObject = object.get(i);
 
-			Rectangle screen = new Rectangle((int)camera.getX(), (int)camera.getY(), game.getWIDTH(), game.getHEIGHT());
-			
-			if(tempObject.getBounds().intersects(screen)){
-				
-				if(tempObject.getId()==ID.rock && tempObject.getType()!=0){
-					tempObject.render(g);
-				}else{
-					tempObject.render(g);
-				}
-			}
-		}
-	}
 	
 	public void addObject(GameObjects tempObject){
 		object.add(tempObject);

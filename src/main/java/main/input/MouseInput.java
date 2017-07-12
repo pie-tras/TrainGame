@@ -6,6 +6,7 @@ import java.awt.event.MouseEvent;
 
 import main.Game;
 import main.EventHandler;
+import main.GameView;
 import main.PlayerModel;
 import main.gfx.Camera;
 import main.objects.ID;
@@ -43,7 +44,7 @@ public class MouseInput extends MouseAdapter{
 		int my = (int) (e.getY() + camera.getY());
 		
 		
-		if(game.getPlayer().getType()<0) return;
+		if(player.getType()<0) return;
 		
 		for (GameObjects tempObject : handler.getObjects()) {
 			

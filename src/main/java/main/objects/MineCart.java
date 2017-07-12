@@ -16,7 +16,7 @@ public class MineCart extends GameObjects{
 	private Game game;
 	private PlayerModel playerModel;
 	
-	public MineCart(int x, int y, ID id, EventHandler handler, Game game) {
+	public MineCart(int x, int y, ID id, Game game) {
 		super(x, y, id);
 		this.playerModel= new PlayerModel(20, 0);
 		this.game=game;

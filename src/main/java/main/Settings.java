@@ -1,8 +1,12 @@
 package main;
 
+import java.awt.Dimension;
+
 import javax.sql.DataSource;
+import javax.swing.JFrame;
 
 import main.audio.Music;
+import main.gfx.Assets;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
@@ -12,8 +16,22 @@ import org.springframework.context.annotation.Configuration;
 
 
 @Configuration
-@EnableAutoConfiguration
 public class Settings {
+    
+    static {
+        System.setProperty("java.awt.headless", "false");
+        Assets.init();
+    }
+    
+    @Value("${window.height:600}") 
+	private int height;
+    
+    @Value("${window.width:800}") 
+	private int width;
+    
+    @Value("${window.title:Train Game}") 
+	private String title;
+
 
     @Value("${audio.banjo}") // :res/audio/Banjo.wav}")
 	private String banjoFile;
@@ -61,4 +79,25 @@ public class Settings {
 	    return dataSourceBuilder.build();   
 	}
 	
+	@Bean
+	public JFrame window() {
+	    JFrame window= new JFrame(title);
+	        
+	    window.setPreferredSize(new Dimension(width, height));
+	    window.setMaximumSize(new Dimension(width, height));
+	    window.setMinimumSize(new Dimension(width, height));
+	        
+	    window.setResizable(false);
+	    window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+	    window.setLocationRelativeTo(null);
+	        
+	    return window;
+	}
+	
+	
+	@Bean
+	public int windowHeight() { return height; }
+	
+	@Bean
+	public int windowWidth() { return width; }
 }
