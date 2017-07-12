@@ -35,7 +35,7 @@ public class Game extends Canvas implements Runnable, CommandLineRunner {
 
 	private boolean isRunning = false;
 	private Thread thread;
-	private Handler handler;
+	private EventHandler handler;
 	private Camera camera;
 	private MouseInput mouseInput;
 	private final int WIDTH=800, HEIGHT=600;
@@ -256,11 +256,11 @@ public class Game extends Canvas implements Runnable, CommandLineRunner {
 	// This is the entry point of the Spring Boot Application - Command Line Runner
     @Override
     public void run(String... arg0) throws Exception {
-        new Window(WIDTH, HEIGHT, "Train Game", this);
+        new GameView(WIDTH, HEIGHT, "Train Game", this);
         Assets.init();
         player = new MineCart(0, 530, ID.mineCart, handler, this);
         camera = new Camera(0, 100);
-        handler = new Handler(this, camera);
+        handler = new EventHandler(this, camera);
         this.addKeyListener(new KeyInput(handler));
         mouseInput = new MouseInput(handler, camera, this);
         this.addMouseListener(mouseInput);

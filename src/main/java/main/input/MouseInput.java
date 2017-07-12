@@ -5,7 +5,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
 import main.Game;
-import main.Handler;
+import main.EventHandler;
 import main.PlayerModel;
 import main.gfx.Camera;
 import main.objects.ID;
@@ -14,14 +14,14 @@ import main.objects.MineCart;
 
 public class MouseInput extends MouseAdapter{
 	
-	private Handler handler;
+	private EventHandler handler;
 	private Camera camera;
 	private Game game;
 	private MineCart player;
 	
 	private int x,y;
 	
-	public MouseInput(Handler handler, Camera camera, Game game){
+	public MouseInput(EventHandler handler, Camera camera, Game game){
 		this.handler = handler;
 		this.camera = camera;
 		this.game = game;

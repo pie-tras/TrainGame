@@ -10,7 +10,7 @@ import main.gfx.Camera;
 import main.objects.GameObjects;
 import main.objects.ID;
 
-public class Handler {
+public class EventHandler {
 	//tick and render all objects
 
     // member variables should generally all be private to promote encapsulation
@@ -20,14 +20,14 @@ public class Handler {
 	private Game game;
 	private Camera camera;
 		
-	public Handler(Game game, Camera camera){
+	public EventHandler(Game game, Camera camera){
 	    this.game=game;
 	    this.camera=camera;
 	}
 		
 	public void tick(){
-		for(int i = 0; i < object.size(); i++){
-			GameObjects tempObject = object.get(i);
+	    
+	    for (GameObjects tempObject : object) {
 			
 			Rectangle screen = new Rectangle((int)camera.getX(), (int)camera.getY(), game.getWIDTH(), game.getHEIGHT());
 			

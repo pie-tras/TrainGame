@@ -4,7 +4,7 @@ import java.awt.Graphics;
 import java.awt.Rectangle;
 
 import main.Game;
-import main.Handler;
+import main.EventHandler;
 import main.PlayerModel;
 import main.gfx.Animation;
 import main.gfx.Assets;
@@ -16,7 +16,7 @@ public class MineCart extends GameObjects{
 	private Game game;
 	private PlayerModel playerModel;
 	
-	public MineCart(int x, int y, ID id, Handler handler, Game game) {
+	public MineCart(int x, int y, ID id, EventHandler handler, Game game) {
 		super(x, y, id);
 		this.playerModel= new PlayerModel(20, 0);
 		this.game=game;

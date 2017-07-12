@@ -3,15 +3,15 @@ package main.input;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 
-import main.Handler;
+import main.EventHandler;
 import main.objects.ID;
 import main.objects.GameObjects;
 
 public class KeyInput extends KeyAdapter{
 
-	Handler handler;
+	EventHandler handler;
 	
-	public KeyInput(Handler handler){
+	public KeyInput(EventHandler handler){
 		this.handler = handler;
 	}
 	
