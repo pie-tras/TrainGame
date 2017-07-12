@@ -86,12 +86,7 @@ public class GameView extends Canvas implements Runnable {
 	        Rectangle screen = new Rectangle((int)camera.getX(), (int)camera.getY(), windowWidth, windowHeight);
 	            
 	        if(tempObject.getBounds().intersects(screen)){
-	                
-	            if(tempObject.getId()==ID.rock && tempObject.getType()!=0){
-	                tempObject.render(g);
-	            }else{
-	                tempObject.render(g);
-	            }
+	            tempObject.render(g);
 	        }
 	    }
 	}
