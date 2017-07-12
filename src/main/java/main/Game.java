@@ -23,9 +23,6 @@ public class Game implements CommandLineRunner {
 	@Autowired
 	private GameView view;
 	
-	@Autowired
-	private EventHandler handler;
-	
 	public Game(){ }
 	
 	public static void main(String args[]){
@@ -39,9 +36,7 @@ public class Game implements CommandLineRunner {
         MineCart player=  new MineCart(0, 530, ID.mineCart, controller);
         GameModel game= new GameModel();
        
-        view.init();
-        game.createLevel(handler, player);
-        
+        view.init(game.createLevel(player));
         
         controller.start(player);
         

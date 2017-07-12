@@ -15,7 +15,11 @@ public class GameModel {
 
     public GameModel() { }
     
-    public void createLevel(EventHandler handler, MineCart player){
+    public Level createLevel(MineCart player){
+        
+        Level level= new Level();
+        
+        EventHandler handler= level.getHandler();
         
         for(int xx=0; xx<132; xx++){
             for(int yy=0; yy<4; yy++){
@@ -52,6 +56,7 @@ public class GameModel {
         }
         
         handler.addObject(player);
+        return level;
     }
     
 }

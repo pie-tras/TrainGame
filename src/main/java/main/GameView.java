@@ -44,23 +44,23 @@ public class GameView extends Canvas implements Runnable {
 	@Autowired
 	private GameController game;
 	
-	@Autowired
-	private EventHandler handler;
-	
 	private MouseInput mouseInput;
 	private Thread thread;
+	
+	private Level level;
 	
 	public GameView(){
         this.camera = new Camera(0, 100);
 	    
 	}
 	
-	public void init() {
+	public void init(Level level) {
+	    this.level= level;
         window.add(this);
 	    window.setVisible(true);
 
-        this.addKeyListener(new KeyInput(handler));
-        mouseInput = new MouseInput(handler, camera, game);
+        this.addKeyListener(new KeyInput(level.getHandler()));
+        mouseInput = new MouseInput(level.getHandler(), camera, game);
         this.addMouseListener(mouseInput);
         this.addMouseMotionListener(mouseInput);
 	}
@@ -111,9 +111,9 @@ public class GameView extends Canvas implements Runnable {
         camera.tick(player);    // this line replaces the above loop (i think) ... brad 2017-07-11
         
         // brad: i can't decide what to do with the below:
-        for (GameObjects obj : handler.getObjects()) {
+        for (GameObjects obj : level.getHandler().getObjects()) {
 		    Rectangle screen = new Rectangle((int)camera.getX(), (int)camera.getY(), windowHeight, windowWidth);
-            handler.tick(obj, screen);
+            level.getHandler().tick(obj, screen);
         }
         // it seems wrong that every piece of the app needs access to every other piece, so i'm trying 
         // to unwind that.  this may just be a revision.
@@ -143,7 +143,7 @@ public class GameView extends Canvas implements Runnable {
         renderTracks(g);
         
         // render the objects 
-        render(handler.getObjects(), g);
+        render(level.getHandler().getObjects(), g);
         
         g2d.translate(camera.getX(), camera.getY());
         
