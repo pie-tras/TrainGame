@@ -2,10 +2,6 @@ package main;
 
 import java.util.Random;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
-import org.springframework.stereotype.Component;
-
 import main.objects.GameObjects;
 import main.objects.ID;
 import main.objects.MineCart;
