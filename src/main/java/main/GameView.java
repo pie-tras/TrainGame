@@ -66,11 +66,7 @@ public class GameView extends Canvas implements Runnable {
 		this.requestFocus();
 		while (game.isRunning()) {
 			render();
-		    try {
-		        Thread.sleep(5);
-		    } catch (InterruptedException ignore) {
-		        
-		    }
+		    // try { Thread.sleep(5); } catch (InterruptedException ignore) { }
 		}
 	}
 	
@@ -157,13 +153,13 @@ public class GameView extends Canvas implements Runnable {
         String msg = "Money "+ game.getPlayer().getModel().getMoney();
         
         g.setColor(Color.BLUE);
-        g.fillRect(245, HEIGHT-107, (msg.length()*32)+15, 48);
-        Font.draw(g, msg, 250, HEIGHT-100, 255, 255, 255, 2);
+        g.fillRect(245, windowHeight-107, (msg.length()*32)+15, 48);
+        Font.draw(g, msg, 250, windowHeight-100, 255, 255, 255, 2);
         
         g.setColor(Color.BLACK);
-        g.fillRect(5, HEIGHT-107, PlayerModel.START_HEALTH *2+4, 32);
+        g.fillRect(5, windowHeight-107, PlayerModel.START_HEALTH *2+4, 32);
         g.setColor(Color.RED);
-        g.fillRect(7, HEIGHT-105, game.getPlayer().getModel().getHealth()*2, 28);
+        g.fillRect(7, windowHeight-105, game.getPlayer().getModel().getHealth()*2, 28);
         
         g.setColor(Color.GREEN);
         g.drawRect(mouseInput.getX()-16, mouseInput.getY()-8, 32, 32);
