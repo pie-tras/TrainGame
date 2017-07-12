@@ -2,7 +2,6 @@ package main;
 
 import java.awt.Canvas;
 import java.awt.Color;
-import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
@@ -12,8 +11,6 @@ import java.util.List;
 import javax.swing.JFrame;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.stereotype.Component;
 
@@ -23,7 +20,6 @@ import main.gfx.Font;
 import main.input.KeyInput;
 import main.input.MouseInput;
 import main.objects.GameObjects;
-import main.objects.ID;
 import main.objects.MineCart;
 
 @EnableAutoConfiguration
