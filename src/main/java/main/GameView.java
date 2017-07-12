@@ -42,19 +42,20 @@ public class GameView extends Canvas implements Runnable {
 	private JFrame window;
 	
 	@Autowired
-	private Game game;
+	private GameController game;
 	
+	@Autowired
 	private EventHandler handler;
+	
 	private MouseInput mouseInput;
 	private Thread thread;
 	
 	public GameView(){
+        this.camera = new Camera(0, 100);
+	    
 	}
 	
 	public void init() {
-        this.camera = new Camera(0, 100);
-        handler= game.getEventHandler();
-	    
         window.add(this);
 	    window.setVisible(true);
 
@@ -110,9 +111,9 @@ public class GameView extends Canvas implements Runnable {
         camera.tick(player);    // this line replaces the above loop (i think) ... brad 2017-07-11
         
         // brad: i can't decide what to do with the below:
-        for (GameObjects obj : game.getEventHandler().getObjects()) {
+        for (GameObjects obj : handler.getObjects()) {
 		    Rectangle screen = new Rectangle((int)camera.getX(), (int)camera.getY(), windowHeight, windowWidth);
-            game.getEventHandler().tick(obj, screen);
+            handler.tick(obj, screen);
         }
         // it seems wrong that every piece of the app needs access to every other piece, so i'm trying 
         // to unwind that.  this may just be a revision.

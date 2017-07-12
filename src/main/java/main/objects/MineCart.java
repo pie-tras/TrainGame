@@ -5,6 +5,7 @@ import java.awt.Rectangle;
 
 import main.Game;
 import main.EventHandler;
+import main.GameController;
 import main.PlayerModel;
 import main.gfx.Animation;
 import main.gfx.Assets;
@@ -13,10 +14,10 @@ public class MineCart extends GameObjects{
 
 	Animation move = new Animation(110 ,Assets.mineCart);
 	
-	private Game game;
+	private GameController game;
 	private PlayerModel playerModel;
 	
-	public MineCart(int x, int y, ID id, Game game) {
+	public MineCart(int x, int y, ID id, GameController game) {
 		super(x, y, id);
 		this.playerModel= new PlayerModel(20, 0);
 		this.game=game;

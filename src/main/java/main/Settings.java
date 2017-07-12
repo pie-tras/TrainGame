@@ -32,7 +32,6 @@ public class Settings {
     @Value("${window.title:Train Game}") 
 	private String title;
 
-
     @Value("${audio.banjo}") // :res/audio/Banjo.wav}")
 	private String banjoFile;
 	
@@ -69,6 +68,11 @@ public class Settings {
 	@Bean(name="ambientCaveSound")
 	public Music ambientCaveSound() {
 	    return new Music(ambientFile);
+	}
+	
+	@Bean
+	public EventHandler eventHandler() {
+	    return new EventHandler();
 	}
 	
 	@Bean

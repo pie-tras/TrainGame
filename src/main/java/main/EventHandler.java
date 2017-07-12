@@ -13,8 +13,6 @@ import main.gfx.Camera;
 import main.objects.GameObjects;
 import main.objects.ID;
 
-@EnableAutoConfiguration
-@Component
 public class EventHandler {
 	//tick and render all objects
 
@@ -23,8 +21,7 @@ public class EventHandler {
 	private boolean move = false, brake = false;
 	
 		
-	public EventHandler(){
-	}
+	public EventHandler(){ }
 		
 	public void tick(GameObjects tempObject, Rectangle screen){
 			
