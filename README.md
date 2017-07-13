@@ -16,3 +16,11 @@ Cyan rocks- Restores 10 hp
 Red rocks - subtracts 10 hp
 
 Get to the end of the level with as much money as possible without breaking down.
+
+
+# Building and Installing
+
+`mvn clean package`
+
+`dpkg -i target/train-game_0.0.1*.deb`
+

@@ -7,6 +7,14 @@ import java.awt.Graphics2D;
 import java.awt.image.BufferStrategy;
 import java.util.Random;
 
+import javax.sql.DataSource;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.boot.CommandLineRunner;
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+
 import main.audio.Music;
 import main.gfx.Assets;
 import main.gfx.Camera;
@@ -18,7 +26,10 @@ import main.objects.GameObjects;
 import main.objects.Rock;
 import main.objects.MineCart;
 
-public class Game extends Canvas implements Runnable{
+// By making this a SpringBootApplication, we get some nice things for "free"
+// like configuration and auto-wiring.
+@SpringBootApplication
+public class Game extends Canvas implements Runnable, CommandLineRunner {
 
 	private static final long serialVersionUID = 1L;
 
@@ -29,41 +40,32 @@ public class Game extends Canvas implements Runnable{
 	private MouseInput mouseInput;
 	private final int WIDTH=800, HEIGHT=600;
 	
+	// Autowired variables are set by some Spring magic at application boot.
+	// The names and types of these variables are important to make the Autowiring 
+	// magic work.
 	//music
-	private Music banjo = new Music("res/audio/Banjo.wav");
+	@Autowired
+	@Qualifier("banjoSound")
+	private Music banjo;
 	
 	//sounds
-	private Music coinSound = new Music("res/audio/Coin.wav");
-	private Music trackSound = new Music("res/audio/Tracks.wav");
+	@Autowired
+	private Music coinSound;
+	
+	@Autowired
+	private Music trackSound;
 	
 	//ambient
-	private Music ambientCave = new Music("res/audio/AmbientCave.wav");
+	@Autowired
+	@Qualifier("ambientCaveSound")
+	private Music ambientCave;
 	
-	private GameObjects player;
+	private MineCart player;
 	
-	private boolean dead=false;
-	private int hp=20, startHp=hp, money;
+	@Autowired
+	private DataSource datasource;
 	
 	public Game(){
-		new Window(WIDTH, HEIGHT, "Train Game", this);
-		Assets.init();
-		camera = new Camera(0, 100);
-		handler = new Handler(this, camera);
-		start();
-		this.addKeyListener(new KeyInput(handler));
-		mouseInput = new MouseInput(handler, camera, this);
-		this.addMouseListener(mouseInput);
-		this.addMouseMotionListener(mouseInput);
-		  
-		player = new MineCart(0, 530, ID.mineCart, handler, this);
-		
-		createLevel();
-		
-		banjo.setVol(-12f);
-		banjo.loop();
-		ambientCave.setVol(5f);
-		ambientCave.loop();
-		trackSound.setVol(4f);
 	}
 	
 	private void start(){
@@ -106,18 +108,25 @@ public class Game extends Canvas implements Runnable{
 	}
 	
 	public void tick(){
-		if(hp<=0){
-			dead = true;
-		}
 		
-		if(dead){
+		if(player.getModel().isDead()){
 			player.setType(-1);
 		}
 		
+		// see below loop for slightly different implementation. 
+		/* 
 		for(int i = 0; i < handler.object.size(); i++){
 			if(handler.object.get(i).getId() == ID.mineCart){
 				camera.tick(handler.object.get(i));
 			}
+		}
+		*/
+		
+		// newer for loop structure (as of about Java6)
+		for (GameObjects obj : handler.getObjects()) {
+		   if (obj.getId() == ID.mineCart) {
+		       camera.tick(obj);
+		   }
 		}
 		
 		handler.tick();
@@ -155,16 +164,16 @@ public class Game extends Canvas implements Runnable{
 	}
 	
 	public void renderHUD(Graphics g){
-		String msg = "Money "+ money;
+		String msg = "Money "+ player.getModel().getMoney();
 		
 		g.setColor(Color.BLUE);
 		g.fillRect(245, HEIGHT-107, (msg.length()*32)+15, 48);
 		Font.draw(g, msg, 250, HEIGHT-100, 255, 255, 255, 2);
 		
 		g.setColor(Color.BLACK);
-		g.fillRect(5, HEIGHT-107, startHp*2+4, 32);
+		g.fillRect(5, HEIGHT-107, PlayerModel.START_HEALTH *2+4, 32);
 		g.setColor(Color.RED);
-		g.fillRect(7, HEIGHT-105, hp*2, 28);
+		g.fillRect(7, HEIGHT-105, player.getModel().getHealth()*2, 28);
 		
 		g.setColor(Color.GREEN);
 		g.drawRect(mouseInput.getX()-16, mouseInput.getY()-8, 32, 32);
@@ -216,31 +225,7 @@ public class Game extends Canvas implements Runnable{
 	
 	
 	public static void main(String args[]){
-		new Game();
-	}
-
-	public int getMoney() {
-		return money;
-	}
-
-	public void setMoney(int money) {
-		this.money = money;
-	}
-
-	public int getHp() {
-		return hp;
-	}
-
-	public void setHp(int hp) {
-		this.hp = hp;
-	}
-	
-	public int getStartHp() {
-		return startHp;
-	}
-
-	public void setStartHp(int startHp) {
-		this.startHp = startHp;
+	    SpringApplication.run(Game.class, args);
 	}
 
 	public int getWIDTH() {
@@ -249,14 +234,6 @@ public class Game extends Canvas implements Runnable{
 
 	public int getHEIGHT() {
 		return HEIGHT;
-	}
-
-	public boolean isDead() {
-		return dead;
-	}
-
-	public void setDead(boolean dead) {
-		this.dead = dead;
 	}
 
 	public Music getCoinSound() {
@@ -275,14 +252,37 @@ public class Game extends Canvas implements Runnable{
 		this.trackSound = trackSound;
 	}
 	
-	public GameObjects getPlayer() {
-		return player;
-	}
 
-	public void setPlayer(GameObjects player) {
-		this.player = player;
-	}
+	// This is the entry point of the Spring Boot Application - Command Line Runner
+    @Override
+    public void run(String... arg0) throws Exception {
+        new Window(WIDTH, HEIGHT, "Train Game", this);
+        Assets.init();
+        player = new MineCart(0, 530, ID.mineCart, handler, this);
+        camera = new Camera(0, 100);
+        handler = new Handler(this, camera);
+        this.addKeyListener(new KeyInput(handler));
+        mouseInput = new MouseInput(handler, camera, this);
+        this.addMouseListener(mouseInput);
+        this.addMouseMotionListener(mouseInput);
+          
+        
+        createLevel();
+        
+        banjo.setVol(-12f);
+        banjo.loop();
+        ambientCave.setVol(5f);
+        ambientCave.loop();
+        trackSound.setVol(4f);
+        
+        start();
+        
+        // datasource.getConnection().createStatement().execute("create table `test` (`a` int);");
+    }
 
+    public MineCart getPlayer() {
+        return player;
+    }
 	
 	
 }
