@@ -15,6 +15,8 @@ public class EventHandler {
 	private LinkedList<GameObjects> object = new LinkedList<GameObjects>();
 	private boolean move = false, brake = false;
 	
+	private boolean levelComplete= false;
+	
 		
 	public EventHandler(){ }
 		
@@ -34,6 +36,10 @@ public class EventHandler {
 				if(tempObject.getId()==ID.mineCart){
 					tempObject.setType(-1);    // brad: figure out why the type is getting set to -1 and what that means.
 					tempObject.tick();
+					// see if we've past the end of the level.
+					if (tempObject.getX() > screen.x + screen.width) {
+					    levelComplete= true;
+					}
 				}
 			}
 	}
@@ -73,5 +79,8 @@ public class EventHandler {
 	}
 
 
+	public boolean isComplete() {
+	    return levelComplete;
+	}
 		
 }

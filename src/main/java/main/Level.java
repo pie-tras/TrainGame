@@ -18,6 +18,7 @@ public class Level implements Comparable<Level> {
     }
     
     private Level(int value) {
+        handler= new EventHandler();
         this.value= Math.abs(value);    // don't allow levels < 0
     }
 
