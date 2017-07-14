@@ -10,11 +10,15 @@ public class Level implements Comparable<Level> {
     
     private int value;
     
+    private EventHandler handler;
+    
     public Level() {
+        handler= new EventHandler();
         this.value= 1;  // the first level
     }
     
     private Level(int value) {
+        handler= new EventHandler();
         this.value= Math.abs(value);    // don't allow levels < 0
     }
 
@@ -39,5 +43,9 @@ public class Level implements Comparable<Level> {
     
     public Level getNextLevel() {
         return new Level(value + 1);
+    }
+    
+    public EventHandler getHandler() {
+        return handler;
     }
 }
