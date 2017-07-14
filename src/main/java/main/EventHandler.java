@@ -1,51 +1,47 @@
 package main;
 
-import java.awt.Graphics;
 import java.awt.Rectangle;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 
-import main.gfx.Camera;
 import main.objects.GameObjects;
 import main.objects.ID;
 
-public class Handler {
+public class EventHandler {
 	//tick and render all objects
 
     // member variables should generally all be private to promote encapsulation
 	private LinkedList<GameObjects> object = new LinkedList<GameObjects>();
 	private boolean move = false, brake = false;
 	
-	private Game game;
-	private Camera camera;
+	private boolean levelComplete= false;
+	
 		
-	public Handler(Game game, Camera camera){
-	    this.game=game;
-	    this.camera=camera;
-	}
+	public EventHandler(){ }
 		
-	public void tick(){
-		for(int i = 0; i < object.size(); i++){
-			GameObjects tempObject = object.get(i);
-			
-			Rectangle screen = new Rectangle((int)camera.getX(), (int)camera.getY(), game.getWIDTH(), game.getHEIGHT());
+	public void tick(GameObjects tempObject, Rectangle screen){
 			
 			if(tempObject.getBounds().intersects(screen)){
 				
-				if(tempObject.getId()==ID.rock && tempObject.getType()!=0){
+			    // there is no difference between the if() and the else()
+				//if(tempObject.getId()==ID.rock && tempObject.getType()!=0){
 					tempObject.tick();
-				}else{
-					tempObject.tick();
-				}
+				//} 
+				//else{
+				//	tempObject.tick();
+				//}
 				
 			}else{
 				if(tempObject.getId()==ID.mineCart){
-					tempObject.setType(-1);
+					tempObject.setType(-1);    // brad: figure out why the type is getting set to -1 and what that means.
 					tempObject.tick();
+					// see if we've past the end of the level.
+					if (tempObject.getX() > screen.x + screen.width) {
+					    levelComplete= true;
+					}
 				}
 			}
-		}
 	}
 	
 	/**
@@ -56,22 +52,7 @@ public class Handler {
         return Collections.unmodifiableList(object);
     }
 		
-	public void render(Graphics g){
-		for(int i = 0; i < object.size(); i++){
-			GameObjects tempObject = object.get(i);
 
-			Rectangle screen = new Rectangle((int)camera.getX(), (int)camera.getY(), game.getWIDTH(), game.getHEIGHT());
-			
-			if(tempObject.getBounds().intersects(screen)){
-				
-				if(tempObject.getId()==ID.rock && tempObject.getType()!=0){
-					tempObject.render(g);
-				}else{
-					tempObject.render(g);
-				}
-			}
-		}
-	}
 	
 	public void addObject(GameObjects tempObject){
 		object.add(tempObject);
@@ -98,5 +79,8 @@ public class Handler {
 	}
 
 
+	public boolean isComplete() {
+	    return levelComplete;
+	}
 		
 }
